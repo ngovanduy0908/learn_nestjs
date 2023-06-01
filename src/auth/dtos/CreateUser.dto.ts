@@ -7,7 +7,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @MaxLength(32)
-  fistName: string;
+  firstName: string;
 
   @IsNotEmpty()
   @MaxLength(32)
