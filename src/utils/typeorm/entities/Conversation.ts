@@ -6,6 +6,7 @@ import {
   JoinColumn,
   OneToMany,
   Column,
+  CreateDateColumn,
 } from 'typeorm';
 import { User } from './User';
 import { Message } from './Messages';
@@ -30,7 +31,7 @@ export class Conversation {
   @JoinColumn()
   messages: Message[];
 
-  @Column({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: number;
 
   @OneToOne(() => Message)
