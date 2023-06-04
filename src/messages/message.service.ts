@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { IMessageService } from './message';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Conversation, Message, User } from 'src/utils/typeorm';
+import { Conversation, Message } from 'src/utils/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMessageParams } from 'src/utils/types';
 import { instanceToPlain } from 'class-transformer';
@@ -42,5 +42,13 @@ export class MessageService implements IMessageService {
     conversation.lastMessageSent = savedMessage;
     await this.conversationRepository.save(conversation);
     return;
+  }
+
+  getMessagesByConversationId(conversationId: number): Promise<Message[]> {
+    return this.messageRepository.find({
+      relations: ['author'],
+      where: { conversation: { id: conversationId } },
+      order: { createdAt: 'DESC' },
+    });
   }
 }
